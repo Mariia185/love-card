@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Открытка для тебя ❤️</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffe6e6, #ffccd5);
+      font-family: 'Arial', sans-serif;
+      overflow: hidden;
+    }
+    #password-screen, #card {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    #password-screen {
+      background: rgba(255, 204, 213, 0.95);
+      z-index: 10;
+      text-align: center;
+    }
+    #password-screen input {
+      padding: 12px;
+      font-size: 18px;
+      border: 2px solid #ff4d6d;
+      border-radius: 12px;
+      text-align: center;
+      outline: none;
+      width: 200px;
+      max-width: 80%;
+    }
+    #password-screen button {
+      margin-top: 15px;
+      padding: 12px 24px;
+      font-size: 18px;
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+    #card {
+      display: none;
+      color: #ff1a4b;
+      font-size: clamp(20px, 5vw, 32px);
+      text-align: center;
+      z-index: 1;
+      line-height: 1.5;
+    }
+    .heart, .kiss {
+      position: absolute;
+      bottom: -50px;
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.8;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 1; }
+      100% { transform: translateY(-120vh) scale(1.5); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Экран с паролем -->
+  <div id="password-screen">
+    <h2>Введи пароль 💌</h2>
+    <input type="password" id="passwordInput" placeholder="Пароль">
+    <button onclick="checkPassword()">Войти</button>
+  </div>
+
+  <!-- Основная открытка -->
+  <div id="card">
+    <h1>Я тебя безумно люблю, счастье мое ❤️💋</h1>
+    <button id="playMusic" style="margin-top:20px; padding:12px 24px; font-size:16px; border:none; border-radius:12px; background:#ff4d6d; color:white; cursor:pointer;">
+      Включить музыку 🎶
+    </button>
+    <audio id="bg-music" loop>
+      <source src="https://www.bensound.com/bensound-music/bensound-romantic.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <script>
+    const correctPassword = "9955";
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      if (input === correctPassword) {
+        document.getElementById("password-screen").style.display = "none";
+        document.getElementById("card").style.display = "flex";
+        spawnEmojis();
+      } else {
+        alert("Неправильный пароль 😘");
+      }
+    }
+
+    // кнопка для запуска музыки (работает на телефонах)
+    document.getElementById("playMusic").addEventListener("click", () => {
+      document.getElementById("bg-music").play();
+      document.getElementById("playMusic").style.display = "none";
+    });
+
+    function spawnEmojis() {
+      setInterval(() => {
+        const emoji = Math.random() > 0.5 ? "❤️" : "💋";
+        const span = document.createElement("span");
+        span.className = emoji === "❤️" ? "heart" : "kiss";
+        span.textContent = emoji;
+        span.style.left = Math.random() * 100 + "vw";
+        span.style.fontSize = (20 + Math.random() * 25) + "px";
+        span.style.animationDuration = (4 + Math.random() * 3) + "s";
+        document.body.appendChild(span);
+        setTimeout(() => span.remove(), 7000);
+      }, 600);
+    }
+  </script>
+
+</body>
+</html>
